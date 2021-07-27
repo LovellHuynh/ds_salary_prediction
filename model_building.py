@@ -32,7 +32,7 @@ y = df_dum.avg_salary.values
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
 # nulitple linear regression
-import statsmodels.api as 
+import statsmodels.api as sm
 
 X_sm = sm.add_constant(X)
 model = sm.OLS(y,X_sm)
@@ -96,4 +96,17 @@ mean_absolute_error(y_test,tpred_lml)
 mean_absolute_error(y_test,tpred_rf)
 
 mean_absolute_error(y_test,(tpred_lm+tpred_rf)/2)
+
+import pickle
+pickl = {'model': gs.best_estimator_}
+pickle.dump( pickl, open( 'model_file' + ".p", "wb" ) )
+
+file_name = "model_file.p"
+with open(file_name, 'rb') as pickled:
+    data = pickle.load(pickled)
+    model = data['model']
+
+model.predict(np.array(list(X_test.iloc[1,:])).reshape(1,-1))[0]
+
+list(X_test.iloc[1,:])
 
